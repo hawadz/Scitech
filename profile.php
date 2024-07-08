@@ -60,124 +60,126 @@ if (isset($_SESSION['user_id'])) {
             <div class="card">
                 <div class="card-body">
                     <div class="d-flex flex-column align-items-center text-center">
-                    <img src="./uploads/<?= $user["avatar"] ?>" alt="Admin" class="rounded-circle" width="20" height="350">
-                        <div class="mt-3">
-                            <h4><?= $user['nama'] ?></h4>
-                            <p class="text-secondary mb-1"><?= $user['prodi'] ?></p>
-                            <p class="text-muted font-size-sm"><?= $user['nim'] ?></p>
+                    <div style="width: 350px; height: 350px; overflow: hidden; border-radius: 50%;">
+                         <img src="./uploads/<?= htmlspecialchars($user["avatar"]) ?>" alt="Admin" style="width: 100%; height: 100%; object-fit: cover;">
+                    </div>
+                    <div class="mt-3">
+                            <h4><?= htmlspecialchars($user['nama']) ?></h4>
+                            <p class="text-secondary mb-1"><?= htmlspecialchars($user['prodi']) ?></p>
+                            <p class="text-muted font-size-sm"><?= htmlspecialchars($user['nim']) ?></p>
                             <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#editPhotoModal">Edit Photo</button>
                         </div>
                     </div>
                 </div>
             </div>
             <div class="card mt-3">
-                <ul class="list-group list-group-flush">
-                    <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
-                        <h6 class="mb-0">Website</h6>
-                        <span class="text-secondary">https://bootdey.com</span>
-                    </li>
-                    <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
-                        <h6 class="mb-0">Github</h6>
-                        <span class="text-secondary">bootdey</span>
-                    </li>
-                    <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
-                        <h6 class="mb-0">Twitter</h6>
-                        <span class="text-secondary">@bootdey</span>
-                    </li>
-                    <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
-                        <h6 class="mb-0">Instagram</h6>
-                        <span class="text-secondary">bootdey</span>
-                    </li>
-                    <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
-                        <h6 class="mb-0">Facebook</h6>
-                        <span class="text-secondary">bootdey</span>
-                    </li>
-                </ul>
             </div>
         </div>
         <div class="col-md-8">
-            <div class="card mb-3">
-                <div class="card-body">
-                    <div class="row">
-                        <div class="col-sm-3">
-                            <h6 class="mb-0">Username</h6>
-                        </div>
-                        <div class="col-sm-9 text-secondary">
-                            <?= $user['username'] ?>
-                        </div>
-                    </div>
-                    <hr>
-                    <div class="row">
-                        <div class="col-sm-3">
-                            <h6 class="mb-0">Full Name</h6>
-                        </div>
-                        <div class="col-sm-9 text-secondary">
-                            <?= $user['nama'] ?>
-                        </div>
-                    </div>
-                    <hr>
-                    <div class="row">
-                        <div class="col-sm-3">
-                            <h6 class="mb-0">Email</h6>
-                        </div>
-                        <div class="col-sm-9 text-secondary">
-                        <?= $user['email'] ?>
-                        </div>
-                    </div>
-                    <hr>
-                    <div class="row">
-                        <div class="col-sm-3">
-                            <h6 class="mb-0">Program Studi</h6>
-                        </div>
-                        <div class="col-sm-9 text-secondary">
-                        <?= $user['prodi'] ?>
-                        </div>
-                    </div>
-                    <hr>
-                    <div class="row">
-                        <div class="col-sm-3">
-                            <h6 class="mb-0">NIM</h6>
-                        </div>
-                        <div class="col-sm-9 text-secondary">
-                        <?= $user['nim'] ?>
-                        </div>
-                    </div>
-                    <hr>
-                    <div class="row">
-                        <div class="col-sm-12">
-                            <a class="btn btn-info" href="edit_profile.php">Edit</a>
-                        </div>
-                    </div>
+    <div class="card mb-3">
+        <div class="card-body">
+            <div class="row">
+                <div class="col-sm-3">
+                    <h6 class="mb-0">Username</h6>
+                </div>
+                <div class="col-sm-9 text-secondary">
+                    <?= htmlspecialchars($user['username']) ?>
                 </div>
             </div>
+            <hr>
+            <div class="row">
+                <div class="col-sm-3">
+                    <h6 class="mb-0">Full Name</h6>
+                </div>
+                <div class="col-sm-9 text-secondary">
+                    <?= htmlspecialchars($user['nama']) ?>
+                </div>
+            </div>
+            <hr>
+            <div class="row">
+                <div class="col-sm-3">
+                    <h6 class="mb0">Email</h6>
+                </div>
+                <div class="col-sm-9 text-secondary">
+                    <?= htmlspecialchars($user['email']) ?>
+                </div>
+            </div>
+            <hr>
+            <div class="row">
+                <div class="col-sm-3">
+                    <h6 class="mb-0">Program Studi</h6>
+                </div>
+                <div class="col-sm-9 text-secondary">
+                    <?= htmlspecialchars($user['prodi']) ?>
+                </div>
+            </div>
+            <hr>
+            <div class="row">
+                <div class="col-sm-3">
+                    <h6 class="mb-0">NIM</h6>
+                </div>
+                <div class="col-sm-9 text-secondary">
+                    <?= htmlspecialchars($user['nim']) ?>
+                </div>
+            </div>
+            <hr>
+            <div class="row">
+                <div class="col-sm-12">
+                    <a class="btn btn-info" href="#" id="editButton">Edit</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
             <div class="row gutters-sm">
-                <div class="mb-3">
-                    <div class="card h-100">
-                        <div class="card-body">
-                            <h6 class="d-flex align-items-center mb-3">Pelatihan</h6>
-                            <small>Web Design</small>
-                            <div class="progress mb-3" style="height: 5px;">
-                                <div class="progress-bar bg-primary" role="progressbar" style="width: 80%;" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100"></div>
-                            </div>
-                            <small>Website Markup</small>
-                            <div class="progress mb-3" style="height: 5px;">
-                                <div class="progress-bar bg-primary" role="progressbar" style="width: 72%;" aria-valuenow="72" aria-valuemin="0" aria-valuemax="100"></div>
-                            </div>
-                            <small>One Page</small>
-                            <div class="progress mb-3" style="height: 5px;">
-                                <div class="progress-bar bg-primary" role="progressbar" style="width: 89%;" aria-valuenow="89" aria-valuemin="0" aria-valuemax="100"></div>
-                            </div>
-                            <small>Mobile Template</small>
-                            <div class="progress mb-3" style="height: 5px;">
-                                <div class="progress-bar bg-primary" role="progressbar" style="width: 55%;" aria-valuenow="55" aria-valuemin="0" aria-valuemax="100"></div>
-                            </div>
-                            <small>Backend API</small>
-                            <div class="progress mb-3" style="height: 5px;">
-                                <div class="progress-bar bg-primary" role="progressbar" style="width: 66%;" aria-valuenow="66" aria-valuemin="0" aria-valuemax="100"></div>
-                            </div>
-                        </div>
+    <div class="mb-3">
+        <div class="card h-100">
+            <div class="card-body">
+                <h6 class="d-flex align-items-center mb-3">Pelatihan</h6>
+
+                <small>Web Design</small>
+                <div class="progress mb-3" style="height: 20px; background-color: #e0e0e0;">
+                    <div class="progress-bar" role="progressbar" style="width: 80%; background-color: #007bff; position: relative;">
+                        <span style="position: absolute; right: 10px; color: white; font-weight: bold;">80%</span>
                     </div>
                 </div>
+
+                <small>Machine Learning for Beginner</small>
+                <div class="progress mb-3" style="height: 20px; background-color: #e0e0e0;">
+                    <div class="progress-bar" role="progressbar" style="width: 72%; background-color: #007bff; position: relative;">
+                        <span style="position: absolute; right: 10px; color: white; font-weight: bold;">72%</span>
+                    </div>
+                </div>
+
+                <small>Fullstack developer</small>
+                <div class="progress mb-3" style="height: 20px; background-color: #e0e0e0;">
+                    <div class="progress-bar" role="progressbar" style="width: 89%; background-color: #007bff; position: relative;">
+                        <span style="position: absolute; right: 10px; color: white; font-weight: bold;">89%</span>
+                    </div>
+                </div>
+
+                <small>Mobile Programming</small>
+                <div class="progress mb-3" style="height: 20px; background-color: #e0e0e0;">
+                    <div class="progress-bar" role="progressbar" style="width: 55%; background-color: #007bff; position: relative;">
+                        <span style="position: absolute; right: 10px; color: white; font-weight: bold;">55%</span>
+                    </div>
+                </div>
+
+                <small>Backend API</small>
+                <div class="progress mb-3" style="height: 20px; background-color: #e0e0e0;">
+                    <div class="progress-bar" role="progressbar" style="width: 66%; background-color: #007bff; position: relative;">
+                        <span style="position: absolute; right: 10px; color: white; font-weight: bold;">66%</span>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Optional Bootstrap 4 CSS for progress bar styling -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+
                 <div class="row gutters-sm">
                 <div class="mb-3">
                     <div class="card h-100">
@@ -235,6 +237,10 @@ if (isset($_SESSION['user_id'])) {
     </div>
 </div>
 
+        </div>
+    </div>
+</div>
+
 <!-- Edit Photo Modal -->
 <div class="modal fade" id="editPhotoModal" tabindex="-1" aria-labelledby="editPhotoModalLabel" aria-hidden="true">
     <div class="modal-dialog">
@@ -256,18 +262,52 @@ if (isset($_SESSION['user_id'])) {
     </div>
 </div>
 
+<!-- Modal Edit Profile -->
+<div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <form action="update_profile.php" method="POST">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="editModalLabel">Edit Profile</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <label for="username" class="form-label">Username</label>
+                        <input type="text" class="form-control" id="username" name="username" value="<?= htmlspecialchars($user['username']) ?>" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="nama" class="form-label">Full Name</label>
+                        <input type="text" class="form-control" id="nama" name="nama" value="<?= htmlspecialchars($user['nama']) ?>" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="email" class="form-label">Email</label>
+                        <input type="email" class="form-control" id="email" name="email" value="<?= htmlspecialchars($user['email']) ?>" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="prodi" class="form-label">Program Studi</label>
+                        <input type="text" class="form-control" id="prodi" name="prodi" value="<?= htmlspecialchars($user['prodi']) ?>" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="nim" class="form-label">NIM</label>
+                        <input type="text" class="form-control" id="nim" name="nim" value="<?= htmlspecialchars($user['nim']) ?>" required>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary">Save changes</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
 <script>
-    document.addEventListener('DOMContentLoaded', function() {
-        const menuTrigger = document.querySelector('.menu-trigger');
-        const nav = document.querySelector('.header-area .nav');
-
-        menuTrigger.addEventListener('click', () => {
-            nav.classList.toggle('active');
-        });
-
-        // Initialize modal manually
-        var editPhotoModal = new bootstrap.Modal(document.getElementById('editPhotoModal'));
+$(document).ready(function() {
+    $("#editButton").on("click", function() {
+        $("#editModal").modal("show");
     });
+});
 </script>
 </body>
 </html>
