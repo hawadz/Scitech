@@ -3,12 +3,12 @@ require 'config.php';
 
 if (isset($_SESSION['user_id'])) {
   $user_id = $_SESSION['user_id'];
-  $sql = "SELECT username FROM user WHERE id = '$user_id'";
+  $sql = "SELECT avatar, role FROM user WHERE id = '$user_id'";
   $result = $conn->query($sql);
   $user = $result->fetch_assoc();
 }
 
-$avatar = isset($_SESSION['avatar']) ? $_SESSION['avatar'] : 'default-avatar.png';
+
 ?>
 
 <!DOCTYPE html>
@@ -75,23 +75,38 @@ https://templatemo.com/tm-563-seo-dream
               <li class="scroll-to-section"><a href="#top" class="active">Home</a></li>
               <li class="scroll-to-section"><a href="#features">E-Learning</a></li>
               <li class="scroll-to-section"><a href="#about">Bootcamp & Program</a></li>
-              <li class="scroll-to-section"><a href="#services">Course</a></li>
+              <li class="scroll-to-section"><a href="course.php">Course</a></li>
               <li class="scroll-to-section"><a href="#portfolio">Career Kit</a></li>
               <li class="scroll-to-section"><a href="#contact">About</a></li> 
               <li class="scroll-to-section profile">
               <?php if (isset($_SESSION['user_id'])): ?>
+                <?php if ($user['role'] == 'admin') { ?>
                 <div style= "display: flex">
                 <div>
-                  <a href="profile.php">
-                    <img src="./uploads/<?php echo htmlspecialchars($avatar); ?>" alt="Admin" class="rounded-circle border border-light">
-                  </a>
-              </div>
+                  <a href="admin/index.php">
+                    <img src="uploads/<?= $user["avatar"]?>" alt="Admin" class="rounded-circle" width="10" height="30">
+                  </a>                  
+                </div>
                 <div class="main-blue-button ">
                     <div class="user-info">
                       <div class="main"><a href="logout.php">Logout</a></div>
                     </div>
                 </div>  
-                </div>    
+                </div>
+                <?php } else { ?>
+                  <div style= "display: flex">
+                <div>
+                  <a href="profile.php">
+                    <img src="uploads/<?= $user["avatar"]?>" alt="Admin" class="rounded-circle" width="10" height="30">
+                  </a>                  
+                </div>
+                <div class="main-blue-button ">
+                    <div class="user-info">
+                      <div class="main"><a href="logout.php">Logout</a></div>
+                    </div>
+                </div>  
+                </div>
+                <?php } ?>
               <?php else: ?>
                 <div class="main-blue-button">
                     <a href="login.php">Join Now</a>

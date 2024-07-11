@@ -30,9 +30,9 @@ if (isset($_POST['submit'])) {
         $nama_lengkap = $_POST['nama_lengkap'];
         $nim = $_POST['nim'];
         $program_studi = $_POST['program_studi'];
-        $nama_bootcamp = $_POST['nama_bootcamp'];
+        $nama_bootcamp = $_POST['nama_bootcamp'] . " Path by Scitech";
         $date =  date('Y-m-d');
-        $tgl_penetapan = "Ditetapkan pada tanggal " . $date;
+        $tgl_penetapan = "Established on " . $date;
 
         // Membuat PDF
         $pdf = new FPDF('L', 'mm', 'A4');
@@ -69,7 +69,7 @@ if (isset($_POST['submit'])) {
         // Menambahkan detail sertifikat
         $pdf->SetFont('Arial', '', 20);
         $pdf->Cell(0, 10, 'has successfully completed the', 0, 1, 'C');
-        $pdf->Cell(0, 10, 'SciTech Bootcamp', 0, 1, 'C');
+        $pdf->Cell(0, 10, $nama_bootcamp , 0, 1, 'C');
         $pdf->Cell(0, 10, $tgl_penetapan, 0, 1, 'C'); // Ganti dengan tanggal sebenarnya
 
         // Jeda baris
@@ -77,6 +77,7 @@ if (isset($_POST['submit'])) {
 
         // Menambahkan tanda tangan dan QR code
         $pdf->Image($file, 50, 150, 100); // Sesuaikan posisi tanda tangan
+        $pdf->Cell(160, 25, 'SciTech Bootcamp', 0, 1, 'C');
         $pdf->Image($penyimpanan . $id_sppd . ".png", 220, 150, 50); // Sesuaikan posisi QR code
 
         // Menyimpan file PDF

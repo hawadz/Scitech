@@ -1,5 +1,4 @@
 <?php
-require 'config.php';
 
 if (isset($_POST['submit'])) {
     $file = $_FILES['userfile']['tmp_name'];

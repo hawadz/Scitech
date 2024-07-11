@@ -3,7 +3,8 @@ require 'config.php';
 
 if (isset($_SESSION['user_id'])) {
   $user_id = $_SESSION['user_id'];
-  $sql = "SELECT * FROM user WHERE id = '$user_id'";
+  $id_kelas = $_GET['id'];
+  $sql = "SELECT user.nama, user.nim, user.prodi, enrolled_class.id, enrolled_class.id_kelas, kelas.nama_kelas as nama_bootcamp FROM user LEFT JOIN enrolled_class ON user.id = enrolled_class.id LEFT JOIN kelas ON kelas.id_kelas = enrolled_class.id_kelas WHERE user.id = '$user_id' AND kelas.id_kelas = '$id_kelas'";
   $result = $conn->query($sql);
   $user = $result->fetch_assoc();
 }
@@ -57,7 +58,7 @@ if (isset($_SESSION['user_id'])) {
     </div>
     <div class="form-group">
         <label>Nama Pelatihan:</label>
-        <input type="text" class="form-control" name="nama_bootcamp" required>
+        <input type="text" class="form-control" name="nama_bootcamp" value="<?= $user["nama_bootcamp"] ?>" required>
     </div>
                     <div class="form-group">
                         <label for="signature-pad">Tanda Tangan:</label>
