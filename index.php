@@ -7,6 +7,8 @@ if (isset($_SESSION['user_id'])) {
   $result = $conn->query($sql);
   $user = $result->fetch_assoc();
 }
+
+$avatar = isset($_SESSION['avatar']) ? $_SESSION['avatar'] : 'default-avatar.png';
 ?>
 
 <!DOCTYPE html>
@@ -81,9 +83,9 @@ https://templatemo.com/tm-563-seo-dream
                 <div style= "display: flex">
                 <div>
                   <a href="profile.php">
-                    <img src="https://bootdey.com/img/Content/avatar/avatar7.png" alt="Admin" class="rounded-circle border border-light" width="20" height="40">
-                  </a>                  
-                </div>
+                    <img src="./uploads/<?php echo htmlspecialchars($avatar); ?>" alt="Admin" class="rounded-circle border border-light">
+                  </a>
+              </div>
                 <div class="main-blue-button ">
                     <div class="user-info">
                       <div class="main"><a href="logout.php">Logout</a></div>

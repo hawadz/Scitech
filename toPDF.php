@@ -39,10 +39,10 @@ if (isset($_POST['submit'])) {
         $pdf->AddPage();
 
         // Mengatur latar belakang sertifikat
-        $pdf->Image('background/bcg.jpg', 0, 0, 297, 210); // Sesuaikan jalur dan ukuran gambar
+        $pdf->Image('background/bckg.jpg', 0, 0, 297, 210); // Sesuaikan jalur dan ukuran gambar
 
         // Menambahkan logo
-        $pdf->Image('logo/logosukabumi.jpeg', 10, 10, 30);
+        $pdf->Image('logo/scitech.jpg', 15, 15, 30);
 
         // Mengatur font dan warna teks
         $pdf->SetTextColor(0, 0, 128);
