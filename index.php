@@ -84,7 +84,7 @@ https://templatemo.com/tm-563-seo-dream
                 <div style= "display: flex">
                 <div>
                   <a href="admin/index.php">
-                    <img src="uploads/<?= $user["avatar"]?>" alt="Admin" class="rounded-circle" width="10" height="30">
+                    <img src="uploads/<?= $user["avatar"]?>" alt="Admin" class="rounded-circle" width="100" height="50">
                   </a>                  
                 </div>
                 <div class="main-blue-button ">

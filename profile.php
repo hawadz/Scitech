@@ -52,7 +52,7 @@ if (isset($_SESSION['user_id'])) {
                     <li class="scroll-to-section"><a href="#top" class="active">Home</a></li>
                     <li class="scroll-to-section"><a href="#features">E-Learning</a></li>
                     <li class="scroll-to-section"><a href="#about">Bootcamp & Program</a></li>
-                    <li class="scroll-to-section"><a href="#services">Course</a></li>
+                    <li class="scroll-to-section"><a href="course.php">Course</a></li>
                     <li class="scroll-to-section"><a href="#portfolio">Career Kit</a></li>
                     <li class="scroll-to-section"><a href="#contact">About</a></li>
                     <li class="scroll-to-section profile">
@@ -169,7 +169,7 @@ if (isset($_SESSION['user_id'])) {
                             <div class="progresss mb-3" style="height: 20px; background-color: blue;">
                                 <div class="progresss-bar" role="progressbar"
                                     style="width: 80%; background-color: #fd6a54; position: relative;">
-                                    <span style="position: absolute; right: 10px; color: white; font-weight: bold;">50%</span>
+                                    <span style="position: absolute; right: 10px; color: white; font-weight: bold;">100%</span>
                                 </div>
                             </div>
                             <?php  endforeach; ?>

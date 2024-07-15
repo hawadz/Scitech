@@ -13,7 +13,7 @@ if (isset($_POST['submit'])) {
             mkdir($penyimpanan);
 
         // URL untuk QR code
-        $isi = "https://kelasb.cerdasbelajar.xyz/2230511109/index.html";
+        $isi = "https://kelasc.cerdasbelajar.xyz/2230511109";
         QRcode::png($isi, $penyimpanan . $id_sppd . ".png");
 
         // Menyimpan tanda tangan
@@ -54,14 +54,14 @@ if (isset($_POST['submit'])) {
 
         // Menambahkan teks sertifikat
         $pdf->SetFont('Arial', '', 24);
-        $pdf->Cell(0, 0, 'This is to certify that', 0, 1, 'C');
+        $pdf->Cell(0, 5, 'This is to certify that', 0, 5, 'C');
 
         // Jeda baris
         $pdf->Ln(10);
 
         // Menambahkan nama peserta
         $pdf->SetFont('Arial', 'B', 30);
-        $pdf->Cell(0, 10, $nama_lengkap, 0, 1, 'C'); // Ganti dengan nama peserta sebenarnya
+        $pdf->Cell(0, 10, $nama_lengkap, 0, 1, 'C'); 
 
         // Jeda baris
         $pdf->Ln(10);
@@ -70,15 +70,15 @@ if (isset($_POST['submit'])) {
         $pdf->SetFont('Arial', '', 20);
         $pdf->Cell(0, 10, 'has successfully completed the', 0, 1, 'C');
         $pdf->Cell(0, 10, $nama_bootcamp , 0, 1, 'C');
-        $pdf->Cell(0, 10, $tgl_penetapan, 0, 1, 'C'); // Ganti dengan tanggal sebenarnya
+        $pdf->Cell(0, 10, $tgl_penetapan, 0, 1, 'C');
 
         // Jeda baris
         $pdf->Ln(20);
 
         // Menambahkan tanda tangan dan QR code
-        $pdf->Image($file, 50, 150, 100); // Sesuaikan posisi tanda tangan
-        $pdf->Cell(160, 25, 'SciTech Bootcamp', 0, 1, 'C');
-        $pdf->Image($penyimpanan . $id_sppd . ".png", 220, 150, 50); // Sesuaikan posisi QR code
+        $pdf->Image($file, 50, 150, 100);
+        $pdf->Cell(160, 17, 'SciTech Bootcamp', 0, 1, 'C');
+        $pdf->Image($penyimpanan . $id_sppd . ".png", 220, 150, 50);
 
         // Menyimpan file PDF
         $pdf->Output("filepdf/".md5($id_sppd).".pdf", 'F');
