@@ -1,7 +1,6 @@
 <?php
 require '../config.php';
 
-session_start();
 
 if (!isset($_SESSION['user_id']) || $_SESSION['role'] != 'admin') {
     header('Location: ../login.php');
@@ -52,6 +51,27 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['id'])) {
         echo "Error: " . $conn->error;
     }
 }
+
+$sqlkelas = "SELECT * FROM kelas";
+$stmtkelas = $conn->prepare($sqlkelas);
+$stmtkelas->execute();
+$resultkelas = $stmtkelas->get_result();
+
+if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['id_kelas'])) {
+    $id_kelas = $_POST['id_kelas'];
+    $nama_kelas = $conn->real_escape_string($_POST['nama_kelas']);
+    $deskripsi_kelas = $conn->real_escape_string($_POST['deskripsi_kelas']);
+    
+    $update_sqlkelas = "UPDATE kelas SET nama_kelas = ?, deskripsi_kelas = ? WHERE id_kelas = ?";
+    $stmt_updatekelas = $conn->prepare($update_sqlkelas);
+    $stmt_updatekelas->bind_param('ssi', $nama_kelas, $deskripsi_kelas, $id_kelas);
+
+    if ($stmt_updatekelas->execute()) {
+        header('Location: index.php');
+    } else {
+        echo "Error: " . $conn->error;
+    }
+}
 ?>
 
 <!DOCTYPE html>
@@ -71,6 +91,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['id'])) {
         document.getElementById('nama').value = nama;
         document.getElementById('nim').value = nim;
         document.getElementById('prodi').value = prodi;
+    }
+
+    function setModalDataKelas(id_kelas, nama_kelas, deskripsi_kelas) {
+        document.getElementById('id_kelas').value = id_kelas;
+        document.getElementById('nama_kelas').value = nama_kelas;
+        document.getElementById('deskripsi_kelas').value = deskripsi_kelas;
     }
 </script>
 
@@ -230,12 +256,96 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['id'])) {
         </div>
 
         <div class="tab-pane fade" id="other-menu" role="tabpanel" aria-labelledby="other-menu-tab">
-            <!-- Load CSV functionality -->
+            <?php include "../loadcsv.php" ?>
         </div>
 
         <div class="tab-pane fade" id="courses" role="tabpanel" aria-labelledby="courses-tab">
-            <!-- Courses functionality -->
+        <div class="d-flex justify-content-between my-3">
+                <button class="btn btn-primary" data-bs-toggle="modal"
+                data-bs-target="#createKelasModal">Add Course</button>
+        </div>    
+        <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th>ID Kelas</th>
+                        <th>Nama Kelas</th>
+                        <th>Deskripsi Kelas</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php while ($kelas = $resultkelas->fetch_assoc()): ?>
+                    <tr>
+                        <td><?= $kelas['id_kelas']; ?></td>
+                        <td><?= $kelas['nama_kelas']; ?></td>
+                        <td><?= $kelas['deskripsi_kelas']; ?></td>                       
+                        <td>
+                            <button class="btn btn-warning btn-sm" data-bs-toggle="modal"
+                            data-bs-target="#editKelasModal" 
+                            onclick="setModalDataKelas('<?= $kelas['id_kelas']; ?>', '<?= $kelas['nama_kelas']; ?>', '<?= $kelas['deskripsi_kelas']; ?>')">Edit</button>
+                            <a href="delete.php?id=<?= $kelas['id_kelas']; ?>" class="btn btn-danger btn-sm">Delete</a>
+                        </td>
+                    </tr>
+                    <?php endwhile; ?>
+                </tbody>
+            </table>
         </div>
+
+        <div class="modal fade" id="editKelasModal" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <form action="" method="POST">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="editModalLabel">Edit Kelas</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                <div class="mb-3">
+                                    <label for="nama_kelas" class="form-label">Nama Kelas</label>
+                                    <input type="text" class="form-control" id="nama_kelas" name="nama_kelas" value="" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="deskripsi_kelas" class="form-label">Deskripsi Kelas</label>
+                                    <input type="text" class="form-control" id="deskripsi_kelas" name="deskripsi_kelas" value="" required>
+                                </div>
+                                    <input type="hidden" id="id_kelas" name="id_kelas" value="">
+                                </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                <button type="submit" class="btn btn-primary">Edit Course</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+     <div class="modal fade" id="createKelasModal" tabindex="-1" aria-labelledby="createModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <form action="create_kelas.php" method="POST">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="createModalLabel">Create New Course</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <label for="new-nama_kelas" class="form-label">Nama Kelas</label>
+                        <input type="text" class="form-control" id="new-nama_kelas" name="nama_kelas" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="new-deskripsi_kelas" class="form-label">Deskripsi Kelas</label>
+                        <input type="text" class="form-control" id="new-deskripsi_kelas" name="deskripsi_kelas" required>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary">Create Course</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
     </div>
 </div>
 
