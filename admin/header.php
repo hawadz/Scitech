@@ -26,7 +26,7 @@
                     <li class="scroll-to-section"><a href="#top" class="active">Home</a></li>
                     <li class="scroll-to-section"><a href="#features">E-Learning</a></li>
                     <li class="scroll-to-section"><a href="#about">Bootcamp & Program</a></li>
-                    <li class="scroll-to-section"><a href="#services">Course</a></li>
+                    <li class="scroll-to-section"><a href="../course.php">Course</a></li>
                     <li class="scroll-to-section"><a href="#portfolio">Career Kit</a></li>
                     <li class="scroll-to-section"><a href="#contact">About</a></li>
                     <li class="scroll-to-section profile">

@@ -1,6 +1,8 @@
 <?php
 require 'config.php';
 
+$error_message = '';
+
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $username = $conn->real_escape_string($_POST['username']);
     $password = password_hash($_POST['password'], PASSWORD_DEFAULT);
@@ -10,13 +12,20 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $nim = $conn->real_escape_string($_POST['nim']);
     $role = 'user';
 
-    $sql = "INSERT INTO user (username, password, nama, email, prodi, nim, role) VALUES ('$username', '$password', '$nama', '$email', '$prodi', '$nim', '$role')";
+    // Check if username or email already exists
+    $checkQuery = "SELECT * FROM user WHERE username='$username' OR email='$email'";
+    $result = $conn->query($checkQuery);
 
-    if ($conn->query($sql) === TRUE) {
-        echo "Registration successful";
-        header('Location: login.php');
+    if ($result->num_rows > 0) {
+        $error_message = "Username atau Email sudah terdaftar";
     } else {
-        echo "Error: " . $sql . "<br>" . $conn->error;
+        $sql = "INSERT INTO user (username, password, nama, email, prodi, nim, role) VALUES ('$username', '$password', '$nama', '$email', '$prodi', '$nim', '$role')";
+
+        if ($conn->query($sql) === TRUE) {
+            header('Location: login.php');
+        } else {
+            $error_message = "Error: " . $sql . "<br>" . $conn->error;
+        }
     }
 }
 ?>
@@ -34,6 +43,42 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     <link rel="stylesheet" href="assets/css/templatemo-seo-dream.css">
     <link rel="stylesheet" href="assets/css/animated.css">
     <link rel="stylesheet" href="assets/css/owl.css">
+    <style>
+        .main-button, .google-button {
+            display: inline-block;
+            padding: 10px 20px;
+            font-size: 16px;
+            font-weight: bold;
+            text-transform: uppercase;
+            border-radius: 5px;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+        .main-button {
+            background-color: #3498db; /* Blue */
+            color: white;
+            border: none;
+        }
+        .main-button:hover {
+            background-color: #2980b9;
+        }
+        .google-button {
+            background-color: #e74c3c; /* Red */
+            color: white;
+            border: none;
+        }
+        .google-button:hover {
+            background-color: #c0392b;
+        }
+        .modal-header {
+            background-color: #8e44ad; /* Purple */
+            color: white;
+        }
+        .modal-footer .btn-primary {
+            background-color: #2ecc71; /* Green */
+            border-color: #27ae60;
+        }
+    </style>
 </head>
 <body>
     <header class="header-area header-sticky wow slideInDown" data-wow-duration="0.75s" data-wow-delay="0s">
@@ -79,10 +124,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                     </div>
                   </div>
 
-                  <?php if (isset($error)) : ?>
-                    <p style="color: red; font-style: italic;">username / password salah</p>
-                  <?php endif; ?>
-                   
                   <div class="col-lg-9">
                     <div class="row">
                       <div class="col-lg-6">
@@ -152,6 +193,32 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
           </div>
         </div>
       </div>
+
+    <?php if (!empty($error_message)) : ?>
+        <div class="modal fade" id="errorModal" tabindex="-1" role="dialog" aria-labelledby="errorModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="errorModalLabel">Kesalahan Registrasi</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <p><?php echo $error_message; ?></p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <script>
+            $(document).ready(function() {
+                $('#errorModal').modal('show');
+            });
+        </script>
+    <?php endif; ?>
 
     <script src="vendor/jquery/jquery.min.js"></script>
     <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>

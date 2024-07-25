@@ -1,10 +1,5 @@
 <?php
 
-if (!isset($_SESSION['user_id']) || $_SESSION['role'] != 'admin') {
-    header('Location: ../login.php');
-    exit;
-}
-
 if (isset($_GET['id'])) {
     $id = $_GET['id'];
     $sql = "SELECT * FROM user WHERE id = '$id'";
@@ -48,7 +43,7 @@ if (isset($_GET['id'])) {
       <div class="modal fade" id="editUserModal" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
-                <form action="update_profile.php" method="POST">
+                <form action="" method="POST">
                     <div class="modal-header">
                         <h5 class="modal-title" id="editModalLabel">Edit Profile</h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
@@ -58,6 +53,7 @@ if (isset($_GET['id'])) {
                             <label for="username" class="form-label">Username</label>
                             <input type="text" class="form-control" id="username" name="username"
                                 value="" required>
+
                         </div>
                         <div class="mb-3">
                             <label for="nama" class="form-label">Full Name</label>
@@ -78,11 +74,12 @@ if (isset($_GET['id'])) {
                             <label for="nim" class="form-label">NIM</label>
                             <input type="text" class="form-control" id="nim" name="nim"
                                 value="" required>
+                            <input type="hidden" id="id" name="id" value="">
                         </div>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                        <button type="submit" class="btn btn-primary">Create User</button>
+                        <button type="submit" class="btn btn-primary">Edit User</button>
                     </div>
                 </form>
             </div>
