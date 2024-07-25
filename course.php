@@ -14,20 +14,26 @@ if (isset($_SESSION['user_id'])) {
     $course_query = "SELECT * FROM kelas";
     $result2 = $conn->query($course_query);
 
-    // Function to join a course
     if (isset($_POST['id_kelas'])) {
         $id_kelas = $_POST['id_kelas'];
-<<<<<<< HEAD
-        $sql_join = "INSERT INTO enrolled_class (id, id_kelas) VALUES ('$user_id', '$id_kelas')";
-=======
-        $sql_join = "UPDATE user SET id_kelas = '$id_kelas' WHERE id = '$user_id'";
->>>>>>> ec1bc42f46ed525bc1e6479f76ad2ab811efa168
-        if ($conn->query($sql_join) === TRUE) {
-            // Success message or redirect
-            echo "<script>alert('Successfully joined the course!');</script>";
+
+        // Check if user is already enrolled in the course
+        $check_query = "SELECT * FROM enrolled_class WHERE id = '$user_id' AND id_kelas = '$id_kelas'";
+        $check_result = $conn->query($check_query);
+
+        if ($check_result->num_rows == 0) {
+            // User is not enrolled in the course, so insert a new record
+            $sql_join = "INSERT INTO enrolled_class (id, id_kelas) VALUES ('$user_id', '$id_kelas')";
+            if ($conn->query($sql_join) === TRUE) {
+                // Success message
+                echo "<script>var showAlert = true; var alertMessage = 'You have successfully enrolled in the class!';</script>";
+            } else {
+                // Error message
+                echo "<script>var showAlert = true; var alertMessage = 'Error joining the course. Please try again later.';</script>";
+            }
         } else {
-            // Error message
-            echo "<script>alert('Error joining the course. Please try again later.');</script>";
+            // User is already enrolled in the course
+            echo "<script>var showAlert = true; var alertMessage = 'You are already enrolled in this course.';</script>";
         }
     }
 }
@@ -43,6 +49,7 @@ if (isset($_SESSION['user_id'])) {
 <!-- Bootstrap core CSS -->
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 
 <!-- Additional CSS Files -->
@@ -53,7 +60,7 @@ if (isset($_SESSION['user_id'])) {
 </head>
 <body>
 
-<header class="header-area header-sticky wow slideInDown" data-wow-duration="0.75s" data-wow-delay="0s">
+<header class="header-area header-sticky ">
     <div class="container">
       <div class="row">
         <div class="col-12">
@@ -76,14 +83,10 @@ if (isset($_SESSION['user_id'])) {
                 <div style= "display: flex">
                 <div>
                   <a href="profile.php">
-<<<<<<< HEAD
-                    <img src="uploads/<?= $user["avatar"] ?>" alt="Admin" class="rounded-circle border border-light"style="width: 100%; height: 100%; object-fit: cover;>
-=======
-                    <img src="uploads/<?= $user["avatar"] ?>" alt="Admin" class="rounded-circle border border-light" width="20" height="40">
->>>>>>> ec1bc42f46ed525bc1e6479f76ad2ab811efa168
+                    <img src="uploads/<?= $user["avatar"] ?>" class="rounded-circle border border-light" style="width: 100%; height: 100%; object-fit: cover;">
                   </a>                  
                 </div>
-                <div class="main-blue-button ">
+                <div class="main-blue-button">
                     <div class="user-info">
                       <div class="main"><a href="logout.php">Logout</a></div>
                     </div>
@@ -106,11 +109,12 @@ if (isset($_SESSION['user_id'])) {
     </div>
   </header>
 
+
 <div id="services" class="our-services section">
     <div class="container">
         <div class="row">
             <div class="col-lg-6 offset-lg-3">
-                <div class="section-heading wow bounceIn" data-wow-duration="1s" data-wow-delay="0.2s">
+                <div class="section-heading" >
                     <h6>Our Main Courses</h6>
                     <h2>Discover What We Do &amp; <span>Offer</span> To Our <em>Students</em></h2>
                 </div>
@@ -118,6 +122,10 @@ if (isset($_SESSION['user_id'])) {
         </div>
     </div>
     <div class="container-fluid">
+    <div id="successAlert" class="alert alert-success alert-dismissible fade show" role="alert" style="display: none;">
+        <span id="alertMessage"></span>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
         <div class="row">
             <?php while ($kelas = $result2->fetch_assoc()): ?>
             <div class="col-lg-4">
@@ -131,7 +139,7 @@ if (isset($_SESSION['user_id'])) {
                         <div class="col-lg-8">
                             <div class="right-content">
                                 <h4><?= $kelas["nama_kelas"] ?></h4>
-                                <p>Gain insights and knowledge from industry experts in various fields of science and technology</p>
+                                <p><?= $kelas["deskripsi_kelas"] ?></p>
                                 <!-- Button to open modal with specific id_kelas -->
                                 <button class="btn btn-primary mt-2" data-bs-toggle="modal" data-bs-target="#agreementModal" onclick="setModalData(<?= $kelas['id_kelas'] ?>)">Join Course</button>
                             </div>
@@ -225,9 +233,13 @@ if (isset($_SESSION['user_id'])) {
     }
 </script>
 
+<script>
+    if (typeof showAlert !== 'undefined' && showAlert) {
+        document.getElementById('alertMessage').innerText = alertMessage;
+        document.getElementById('successAlert').style.display = 'block';
+    }
+</script>
+
+
 </body>
-<<<<<<< HEAD
 </html>
-=======
-</html>
->>>>>>> ec1bc42f46ed525bc1e6479f76ad2ab811efa168
