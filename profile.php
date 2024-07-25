@@ -22,6 +22,8 @@ if (isset($_SESSION['user_id'])) {
         die("Error: " . $conn->error);
     }
 }
+
+$alertMessage = isset($_GET['alert']) ? $_GET['alert'] : null;
 ?>
 
 <!DOCTYPE html>
@@ -75,13 +77,17 @@ if (isset($_SESSION['user_id'])) {
     </header>
 
     <div class="main-banner container super-profile">
+    <div id="successAlert" class="alert alert-success alert-dismissible fade show" role="alert" style="display: none;">
+        <span id="alertMessage"></span>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
         <div class="row gutters-sm">
             <div class="col-md-4 mb-3">
                 <div class="card">
                     <div class="card-body">
                         <div class="d-flex flex-column align-items-center text-center">
                             <div style="width: 350px; height: 350px; overflow: hidden; border-radius: 50%;">
-                                <img src="./uploads/<?= $user["avatar"] ?>" alt="Admin" style="width:100%; height: 100%; object-fit: cover;">
+                                <img src="./uploads/<?= $user["avatar"] ?>" alt="User" style="width:100%; height: 100%; object-fit: cover;">
                             </div>
                             <div class="mt-3">
                                 <h4>
@@ -235,6 +241,7 @@ if (isset($_SESSION['user_id'])) {
                                                 points="82.777,217.341 43.731,217.341 82.777,246.626 " />
                                         </svg>
                                     </a>
+                                    <a href="cancel_course.php?id_kelas=<?= $k['id_kelas']; ?>" class="mx-5 btn btn-danger btn-sm">Cancel Course</a>
                                 </div>
                             </div>
                             <?php endforeach; ?>
@@ -319,6 +326,16 @@ if (isset($_SESSION['user_id'])) {
             $("#editButton").on("click", function () {
                 $("#editModal").modal("show");
             });
+        });
+    </script>
+
+<script>
+        document.addEventListener("DOMContentLoaded", function() {
+            var alertMessage = <?php echo json_encode($alertMessage); ?>;
+            if (alertMessage) {
+                document.getElementById('alertMessage').innerText = alertMessage;
+                document.getElementById('successAlert').style.display = 'block';
+            }
         });
     </script>
 </body>

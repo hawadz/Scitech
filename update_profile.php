@@ -33,7 +33,7 @@ $stmt->bind_param("sssssi", $username, $nama, $email, $prodi, $nim, $user_id);
 
 if ($stmt->execute()) {
     // Jika berhasil, kembalikan ke halaman profil
-    header("Location: profile.php");
+    header("Location: profile.php?alert=Profile updated successfully");
 } else {
     echo "Error updating record: " . $conn->error;
 }
