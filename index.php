@@ -8,6 +8,8 @@ if (isset($_SESSION['user_id'])) {
   $user = $result->fetch_assoc();
 }
 
+$course_query = "SELECT * FROM kelas";
+$result2 = $conn->query($course_query);
 
 ?>
 
@@ -97,7 +99,7 @@ https://templatemo.com/tm-563-seo-dream
                   <div style= "display: flex">
                 <div>
                   <a href="profile.php">
-                    <img src="uploads/<?= $user["avatar"]?>" alt="Admin" class="rounded-circle" width="10" height="30">
+                    <img src="uploads/<?= $user["avatar"]?>" alt="User" class="rounded-circle" width="10" height="30">
                   </a>                  
                 </div>
                 <div class="main-blue-button ">
@@ -348,122 +350,45 @@ https://templatemo.com/tm-563-seo-dream
 
   <div id="services" class="our-services section">
     <div class="container">
-      <div class="row">
-        <div class="col-lg-6 offset-lg-3">
-          <div class="section-heading wow bounceIn" data-wow-duration="1s" data-wow-delay="0.2s">
-            <h6>Our Services</h6>
-            <h2>Discover What We Do &amp; <span>Offer</span> To Our <em>Students</em></h2>
-          </div>
+        <div class="row">
+            <div class="col-lg-6 offset-lg-3">
+                <div class="section-heading" >
+                    <h6>Our Main Courses</h6>
+                    <h2>Discover What We Do &amp; <span>Offer</span> To Our <em>Students</em></h2>
+                </div>
+            </div>
         </div>
-      </div>
     </div>
     <div class="container-fluid">
-      <div class="row">
-        <div class="col-lg-4">
-          <div class="service-item wow bounceInUp" data-wow-duration="1s" data-wow-delay="0.3s">
-            <div class="row">
-              <div class="col-lg-4">
-                <div class="icon">
-                  <img src="assets/images/service-icon-01.png" alt="">
-                </div>
-              </div>
-              <div class="col-lg-8">
-                <div class="right-content">
-                  <h4>Expert-Led Workshops</h4>
-                  <p>Gain insights and knowledge from industry experts in various fields of science and technology.</p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="col-lg-4">
-          <div class="service-item wow bounceInUp" data-wow-duration="1s" data-wow-delay="0.4s">
-            <div class="row">
-              <div class="col-lg-4">
-                <div class="icon">
-                  <img src="assets/images/service-icon-02.png" alt="">
-                </div>
-              </div>
-              <div class="col-lg-8">
-                <div class="right-content">
-                  <h4>Hands-On Learning</h4>
-                  <p>Engage in practical, real-world projects and applications to solidify your understanding.</p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="col-lg-4">
-          <div class="service-item wow bounceInUp" data-wow-duration="1s" data-wow-delay="0.5s">
-            <div class="row">
-              <div class="col-lg-4">
-                <div class="icon">
-                  <img src="assets/images/service-icon-03.png" alt="">
-                </div>
-              </div>
-              <div class="col-lg-8">
-                <div class="right-content">
-                  <h4>Wide Curriculum</h4>
-                  <p>Explore diverse fields like Computer Science, Engineering, and various Sciences.</p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="col-lg-4">
-          <div class="service-item wow bounceInUp" data-wow-duration="1s" data-wow-delay="0.6s">
-            <div class="row">
-              <div class="col-lg-4">
-                <div class="icon">
-                  <img src="assets/images/service-icon-03.png" alt="">
-                </div>
-              </div>
-              <div class="col-lg-8">
-                <div class="right-content">
-                  <h4>Career Networking</h4>
-                  <p>Connect with professionals and peers to build valuable relationships for your future career.</p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="col-lg-4">
-          <div class="service-item wow bounceInUp" data-wow-duration="1s" data-wow-delay="0.7s">
-            <div class="row">
-              <div class="col-lg-4">
-                <div class="icon">
-                  <img src="assets/images/service-icon-01.png" alt="">
-                </div>
-              </div>
-              <div class="col-lg-8">
-                <div class="right-content">
-                  <h4>Innovation Labs</h4>
-                  <p>Participate in labs designed to foster creativity and innovation in science and technology.</p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="col-lg-4">
-          <div class="service-item wow bounceInUp" data-wow-duration="1s" data-wow-delay="0.8s">
-            <div class="row">
-              <div class="col-lg-4">
-                <div class="icon">
-                  <img src="assets/images/service-icon-02.png" alt="">
-                </div>
-              </div>
-              <div class="col-lg-8">
-                <div class="right-content">
-                  <h4>Research Opportunities</h4>
-                  <p>Engage in research projects that contribute to advancements in your field of study.</p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
+    <div id="successAlert" class="alert alert-success alert-dismissible fade show" role="alert" style="display: none;">
+        <span id="alertMessage"></span>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
     </div>
-  </div>
+        <div class="row">
+            <?php while ($kelas = $result2->fetch_assoc()): ?>
+            <div class="col-lg-4">
+                <div class="service-item wow bounceInUp" data-wow-duration="1s" data-wow-delay="0.3s">
+                    <div class="row">
+                        <div class="col-lg-4">
+                            <div class="icon">
+                                <img src="assets/images/service-icon-01.png" alt="">
+                            </div>
+                        </div>
+                        <div class="col-lg-8">
+                            <div class="right-content">
+                                <h4><?= $kelas["nama_kelas"] ?></h4>
+                                <p><?= $kelas["deskripsi_kelas"] ?></p>
+                                <!-- Button to open modal with specific id_kelas -->
+                                <button class="btn btn-primary mt-2" data-bs-toggle="modal" data-bs-target="#agreementModal" onclick="setModalData(<?= $kelas['id_kelas'] ?>)">Join Course</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <?php endwhile; ?>
+        </div>
+    </div>
+</div>
 
 
   <div id="portfolio" class="our-portfolio section">
