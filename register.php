@@ -4,30 +4,40 @@ require 'config.php';
 $error_message = '';
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    $username = $conn->real_escape_string($_POST['username']);
-    $password = password_hash($_POST['password'], PASSWORD_DEFAULT);
-    $nama = $conn->real_escape_string($_POST['nama']);
-    $email = $conn->real_escape_string($_POST['email']);
-    $prodi = $conn->real_escape_string($_POST['prodi']);
-    $nim = $conn->real_escape_string($_POST['nim']);
-    $role = 'user';
+  $username = $conn->real_escape_string($_POST['username']);
+  $password = $_POST['password'];
+  $nama = $conn->real_escape_string($_POST['nama']);
+  $email = $conn->real_escape_string($_POST['email']);
+  $prodi = $conn->real_escape_string($_POST['prodi']);
+  $nim = $conn->real_escape_string($_POST['nim']);
+  $role = 'user';
 
-    // Check if username or email already exists
-    $checkQuery = "SELECT * FROM user WHERE username='$username' OR email='$email'";
-    $result = $conn->query($checkQuery);
+  $passwordPattern = "/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/";
 
-    if ($result->num_rows > 0) {
-        $error_message = "Username atau Email sudah terdaftar";
-    } else {
-        $sql = "INSERT INTO user (username, password, nama, email, prodi, nim, role) VALUES ('$username', '$password', '$nama', '$email', '$prodi', '$nim', '$role')";
+  // Check if the password meets the criteria
+  if (!preg_match($passwordPattern, $password)) {
+      $error_message = "Password must contain at least 8 characters, including letters and numbers.";
+  } else {
+      $passwordHashed = password_hash($password, PASSWORD_DEFAULT);
 
-        if ($conn->query($sql) === TRUE) {
-            header('Location: login.php');
-        } else {
-            $error_message = "Error: " . $sql . "<br>" . $conn->error;
-        }
-    }
+      // Check if username or email already exists
+      $checkQuery = "SELECT * FROM user WHERE username='$username' OR email='$email'";
+      $result = $conn->query($checkQuery);
+
+      if ($result->num_rows > 0) {
+          $error_message = "Username or Email already registered";
+      } else {
+          $sql = "INSERT INTO user (username, password, nama, email, prodi, nim, role) VALUES ('$username', '$passwordHashed', '$nama', '$email', '$prodi', '$nim', '$role')";
+
+          if ($conn->query($sql) === TRUE) {
+              header('Location: login.php');
+          } else {
+              $error_message = "Error: " . $sql . "<br>" . $conn->error;
+          }
+      }
+  }
 }
+
 ?>
 
 <!DOCTYPE html>
