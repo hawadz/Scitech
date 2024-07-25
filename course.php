@@ -17,7 +17,11 @@ if (isset($_SESSION['user_id'])) {
     // Function to join a course
     if (isset($_POST['id_kelas'])) {
         $id_kelas = $_POST['id_kelas'];
+<<<<<<< HEAD
         $sql_join = "INSERT INTO enrolled_class (id, id_kelas) VALUES ('$user_id', '$id_kelas')";
+=======
+        $sql_join = "UPDATE user SET id_kelas = '$id_kelas' WHERE id = '$user_id'";
+>>>>>>> ec1bc42f46ed525bc1e6479f76ad2ab811efa168
         if ($conn->query($sql_join) === TRUE) {
             // Success message or redirect
             echo "<script>alert('Successfully joined the course!');</script>";
@@ -72,7 +76,11 @@ if (isset($_SESSION['user_id'])) {
                 <div style= "display: flex">
                 <div>
                   <a href="profile.php">
+<<<<<<< HEAD
                     <img src="uploads/<?= $user["avatar"] ?>" alt="Admin" class="rounded-circle border border-light"style="width: 100%; height: 100%; object-fit: cover;>
+=======
+                    <img src="uploads/<?= $user["avatar"] ?>" alt="Admin" class="rounded-circle border border-light" width="20" height="40">
+>>>>>>> ec1bc42f46ed525bc1e6479f76ad2ab811efa168
                   </a>                  
                 </div>
                 <div class="main-blue-button ">
@@ -218,4 +226,8 @@ if (isset($_SESSION['user_id'])) {
 </script>
 
 </body>
+<<<<<<< HEAD
 </html>
+=======
+</html>
+>>>>>>> ec1bc42f46ed525bc1e6479f76ad2ab811efa168
