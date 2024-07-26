@@ -2,6 +2,7 @@
 require 'config.php';
 
 $error_message = '';
+$success_message = '';
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
   $username = $conn->real_escape_string($_POST['username']);
@@ -30,14 +31,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
           $sql = "INSERT INTO user (username, password, nama, email, prodi, nim, role) VALUES ('$username', '$passwordHashed', '$nama', '$email', '$prodi', '$nim', '$role')";
 
           if ($conn->query($sql) === TRUE) {
-              header('Location: login.php');
+              $success_message = "Registration successful. Redirecting to login...";
           } else {
               $error_message = "Error: " . $sql . "<br>" . $conn->error;
           }
       }
   }
 }
-
 ?>
 
 <!DOCTYPE html>
@@ -87,6 +87,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         .modal-footer .btn-primary {
             background-color: #2ecc71; /* Green */
             border-color: #27ae60;
+        }
+        .error-message {
+            color: red;
         }
     </style>
 </head>
@@ -164,6 +167,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                       <div class="col-lg-6">
                         <fieldset>
                           <input type="password" name="password" id="password" placeholder="Password" required>
+                          <?php if (!empty($error_message)): ?>
+                              <p class="error-message"><?php echo $error_message; ?></p>
+                          <?php endif; ?>
                         </fieldset>
                       </div>
                       <div class="col-lg-12">
@@ -171,6 +177,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                           <button type="submit" name="login" id="form-submit" class="main-button">Register</button>
                         </fieldset>
                       </div>
+                      <?php if (!empty($success_message)): ?>
+                        <script>
+                          $(document).ready(function() {
+                              alert('<?php echo $success_message; ?>');
+                              window.location.href = 'login.php';
+                          });
+                        </script>
+                      <?php endif; ?>
                     </div>
                   </div>
                   <div class="col-lg-3">
@@ -203,32 +217,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
           </div>
         </div>
       </div>
-
-    <?php if (!empty($error_message)) : ?>
-        <div class="modal fade" id="errorModal" tabindex="-1" role="dialog" aria-labelledby="errorModalLabel" aria-hidden="true">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="errorModalLabel">Kesalahan Registrasi</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    <div class="modal-body">
-                        <p><?php echo $error_message; ?></p>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <script>
-            $(document).ready(function() {
-                $('#errorModal').modal('show');
-            });
-        </script>
-    <?php endif; ?>
 
     <script src="vendor/jquery/jquery.min.js"></script>
     <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
