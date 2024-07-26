@@ -24,7 +24,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             header('Location: index.php');
             exit;
         } else {
-            $error_message = "Incorrect password";
+            $error_message = "Password salah.";
         }
     } else {
         $error_message = "Username tidak ditemukan. Silakan registrasi.";
