@@ -1,5 +1,15 @@
 <?php
 
+function generateRandomPassword($length = 10) {
+    $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+    $charactersLength = strlen($characters);
+    $randomPassword = '';
+    for ($i = 0; $i < $length; $i++) {
+        $randomPassword .= $characters[rand(0, $charactersLength - 1)];
+    }
+    return $randomPassword;
+}
+
 if (isset($_POST['submit'])) {
     $file = $_FILES['userfile']['tmp_name'];
 
@@ -27,18 +37,24 @@ if (isset($_POST['submit'])) {
                 $nim = mysqli_real_escape_string($conn, $row[4]);
                 $avatar = mysqli_real_escape_string($conn, $row[5]);
 
+                $password = generateRandomPassword();
+                $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
+
                 // Data yang akan disimpan ke dalam database
-                $sql = "INSERT INTO user (username, nama, email, prodi, nim, avatar) VALUES
-                        ('$username', '$nama', '$email', '$prodi', '$nim', '$avatar')
+                $sql = "INSERT INTO user (username, nama, email, prodi, nim, avatar, password) VALUES
+                        ('$username', '$nama', '$email', '$prodi', '$nim', '$avatar', '$hashedPassword')
                         ON DUPLICATE KEY UPDATE 
                         nama = VALUES(nama), 
                         email = VALUES(email), 
                         prodi = VALUES(prodi), 
                         nim = VALUES(nim), 
-                        avatar = VALUES(avatar)";
-                echo $sql;
+                        avatar = VALUES(avatar),
+                        password = '$hashedPassword'";
+                
+                
                 if (mysqli_query($conn, $sql)) {
-                    echo "Data berhasil disimpan";
+                    //echo "<script>var showAlert = true; var alertMessage = 'Data berhasil disimpan';</script>";
+                    //header("Location: admin/index.php?alert=Profile updated successfully");
                 } else {
                     echo "Error: " . $sql . "<br>" . mysqli_error($conn);
                 }
@@ -49,7 +65,9 @@ if (isset($_POST['submit'])) {
         }
     }
 }
+
 ?>
+
 <!doctype html>
 <html lang="en">
 <head>
@@ -71,7 +89,6 @@ if (isset($_POST['submit'])) {
         <table id="example" class="display table table-striped mt-5" style="width:100%">
             <thead>
                 <tr>
-                    <th>No</th>
                     <th>Username</th>
                     <th>Nama</th>
                     <th>Email</th>
@@ -84,11 +101,9 @@ if (isset($_POST['submit'])) {
                 <?php 
                 $sqlproduct = "SELECT * FROM user";
                 $result = mysqli_query($conn, $sqlproduct);
-                $no = 1;
                 while ($row = mysqli_fetch_array($result)) { 
                 ?>
                 <tr>
-                    <td><?php echo $no;?></td>
                     <td><?php echo $row["username"];?></td>
                     <td><?php echo $row["nama"];?></td>
                     <td><?php echo $row["email"];?></td>
@@ -96,7 +111,7 @@ if (isset($_POST['submit'])) {
                     <td><?php echo $row["nim"];?></td>
                     <td><?php echo $row["avatar"];?></td>
                 </tr>
-                <?php $no++ ; } ?>
+                <?php }; ?>
             </tbody>
         </table>
     </div>

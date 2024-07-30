@@ -152,7 +152,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['id_kelas'])) {
                         <td><?= $user['prodi']; ?></td>
                         <td><?= $user['courses']; ?></td>
                         <td>
-                            <button class="btn btn-warning btn-sm" data-bs-toggle="modal"
+                            <button class="btn btn-info btn-sm" style="color: white; background-color: #33ccc5;" data-bs-toggle="modal"
                             data-bs-target="#editUserModal" 
                             onclick="setModalData('<?= $user['id']; ?>', '<?= $user['username']; ?>', '<?= $user['email']; ?>', '<?= $user['nama']; ?>', '<?= $user['nim']; ?>', '<?= $user['prodi']; ?>')">Edit</button>
                             <a href="delete.php?id=<?= $user['id']; ?>" class="btn btn-danger btn-sm">Delete</a>
@@ -183,6 +183,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['id_kelas'])) {
                     <div class="mb-3">
                         <label for="new-email" class="form-label">Email</label>
                         <input type="email" class="form-control" id="new-email" name="email" required>
+                        
                     </div>
                     <div class="mb-3">
                         <label for="new-prodi" class="form-label">Program Studi</label>
@@ -280,7 +281,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['id_kelas'])) {
                         <td><?= $kelas['nama_kelas']; ?></td>
                         <td><?= $kelas['deskripsi_kelas']; ?></td>                       
                         <td>
-                            <button class="btn btn-warning btn-sm" data-bs-toggle="modal"
+                            <button class="btn btn-info btn-sm" style="color: white; background-color: #33ccc5;" data-bs-toggle="modal"
                             data-bs-target="#editKelasModal" 
                             onclick="setModalDataKelas('<?= $kelas['id_kelas']; ?>', '<?= $kelas['nama_kelas']; ?>', '<?= $kelas['deskripsi_kelas']; ?>')">Edit</button>
                             <a href="delete.php?id=<?= $kelas['id_kelas']; ?>" class="btn btn-danger btn-sm">Delete</a>

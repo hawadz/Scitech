@@ -16,7 +16,7 @@ if (isset($_SESSION['user_id'])) {
 
         // Validasi file
         if (!in_array($ext, $allowed)) {
-            die("Error: Please select a valid file format.");
+            header("Location: profile.php?alert=Please select a valid file format.");
         }
 
         // Mendapatkan nama file avatar lama
@@ -40,7 +40,7 @@ if (isset($_SESSION['user_id'])) {
             header("Location: profile.php?alert=Photo uploaded successfully.");
             exit();
         } else {
-            die("Error updating record: " . $conn->error);
+            header("Location: profile.php?alert=". $conn->error);
         }
     } else {
         die("Error: " . $_FILES['avatar']['error']);

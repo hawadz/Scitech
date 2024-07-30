@@ -11,6 +11,9 @@ if (isset($_SESSION['user_id'])) {
 $course_query = "SELECT * FROM kelas";
 $result2 = $conn->query($course_query);
 
+$project_query = "SELECT * FROM project";
+$result3 = $conn->query($project_query);
+
 ?>
 
 <!DOCTYPE html>
@@ -227,79 +230,6 @@ https://templatemo.com/tm-563-seo-dream
         </div>
         <div class="col-lg-12">
           <div class="skills-content">
-            <div class="row">
-              <div class="col-lg-3">
-                <div class="skill-item wow fadeIn" data-wow-duration="1s" data-wow-delay="0s">
-                  <div class="progress" data-percentage="80">
-                    <span class="progress-left">
-                      <span class="progress-bar"></span>
-                    </span>
-                    <span class="progress-right">
-                      <span class="progress-bar"></span>
-                    </span>
-                    <div class="progress-value">
-                      <div>
-                        80%<br>
-                        <span>Expert Guidance:</span>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div class="col-lg-3">
-                <div class="skill-item wow fadeIn" data-wow-duration="1s" data-wow-delay="0.2s">
-                  <div class="progress" data-percentage="60">
-                    <span class="progress-left">
-                      <span class="progress-bar"></span>
-                    </span>
-                    <span class="progress-right">
-                      <span class="progress-bar"></span>
-                    </span>
-                    <div class="progress-value">
-                      <div>
-                        60%<br>
-                        <span>Hands-On Learning</span>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div class="col-lg-3">
-                <div class="skill-item wow fadeIn" data-wow-duration="1s" data-wow-delay="0.4s">
-                  <div class="progress" data-percentage="90">
-                    <span class="progress-left">
-                      <span class="progress-bar"></span>
-                    </span>
-                    <span class="progress-right">
-                      <span class="progress-bar"></span>
-                    </span>
-                    <div class="progress-value">
-                      <div>
-                        90%<br>
-                        <span>Wide Curriculum</span>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div class="col-lg-3">
-                <div class="skill-item last-skill-item wow fadeIn" data-wow-duration="1s" data-wow-delay="0.6s">
-                  <div class="progress" data-percentage="70">
-                    <span class="progress-left">
-                      <span class="progress-bar"></span>
-                    </span>
-                    <span class="progress-right">
-                      <span class="progress-bar"></span>
-                    </span>
-                    <div class="progress-value">
-                      <div>
-                        70%<br>
-                        <span>Career Networking</span>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
             </div>
           </div>
         </div>
@@ -406,102 +336,32 @@ https://templatemo.com/tm-563-seo-dream
       <div class="row">
         <div class="col-lg-12">
           <div class="loop owl-carousel">
+          <?php while ($project = $result3->fetch_assoc()): ?>
             <div class="item">
               <div class="portfolio-item">
                 <div class="thumb">
-                  <img src="assets/images/portfolio-01.jpg" alt="">
+                  <img src="assets/images/<?= $project['foto_project']?>" alt="">
                   <div class="hover-content">
                     <div class="inner-content">
-                      <a href="#"><h4>Innovative Project 101</h4></a>
-                      <span>Science</span>
+                      <a href="#"><h4><?= $project['nama_project']?></h4></a>
+                      <span><?= $project['bidang']?></span>
                     </div>
                   </div>
                 </div>
               </div>
               <div class="portfolio-item">
                 <div class="thumb">
-                  <img src="assets/images/portfolio-04.jpg" alt="">
+                  <img src="assets/images/<?= $project['foto_project']?>" alt="">
                   <div class="hover-content">
                     <div class="inner-content">
-                      <a href="#"><h4>Innovative Project 102</h4></a>
-                      <span>Technology</span>
+                      <a href="#"><h4><?= $project['nama_project']?></h4></a>
+                      <span><?= $project['bidang']?></span>
                     </div>
                   </div>
                 </div>
               </div>
             </div>
-            <div class="item">
-              <div class="portfolio-item">
-                <div class="thumb">
-                  <img src="assets/images/portfolio-02.jpg" alt="">
-                  <div class="hover-content">
-                    <div class="inner-content">
-                      <a href="#"><h4>Innovative Project 103</h4></a>
-                      <span>Engineering</span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div class="portfolio-item">
-                <div class="thumb">
-                  <img src="assets/images/portfolio-05.jpg" alt="">
-                  <div class="hover-content">
-                    <div class="inner-content">
-                      <a href="#"><h4>Innovative Project 104</h4></a>
-                      <span>Research</span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="item">
-              <div class="portfolio-item">
-                <div class="thumb">
-                  <img src="assets/images/portfolio-03.jpg" alt="">
-                  <div class="hover-content">
-                    <div class="inner-content">
-                      <a href="#"><h4>Innovative Project 105</h4></a>
-                      <span>Science</span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div class="portfolio-item">
-                <div class="thumb">
-                  <img src="assets/images/portfolio-06.jpg" alt="">
-                  <div class="hover-content">
-                    <div class="inner-content">
-                      <a href="#"><h4>Innovative Project 106</h4></a>
-                      <span>Technology</span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="item">
-              <div class="portfolio-item">
-                <div class="thumb">
-                  <img src="assets/images/portfolio-04.jpg" alt="">
-                  <div class="hover-content">
-                    <div class="inner-content">
-                      <a href="#"><h4>Innovative Project 107</h4></a>
-                      <span>Engineering</span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div class="portfolio-item">
-                <div class="thumb">
-                  <img src="assets/images/portfolio-01.jpg" alt="">
-                  <div class="hover-content">
-                    <div class="inner-content">
-                      <a href="#"><h4>Innovative Project 108</h4></a>
-                      <span>Research</span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
+            <?php endwhile; ?>
           </div>
         </div>
       </div>

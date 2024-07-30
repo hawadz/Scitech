@@ -32,7 +32,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
           $sql = "INSERT INTO user (username, password, nama, email, prodi, nim, role) VALUES ('$username', '$passwordHashed', '$nama', '$email', '$prodi', '$nim', '$role')";
 
           if ($conn->query($sql) === TRUE) {
-              $success_message = "Registration successful. Redirecting to login...";
+              //$success_message = "Registration successful. Redirecting to login...";
+              echo "<script>var showAlert = true; var alertMessage = 'Registration successful';</script>";
           } else {
               $error_message = "Error: " . $sql . "<br>" . $conn->error;
           }
@@ -48,7 +49,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Scitech Camp</title>
     <!-- Bootstrap core CSS -->
-    <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
     <!-- Additional CSS Files -->
     <link rel="stylesheet" href="assets/css/fontawesome.css">
     <link rel="stylesheet" href="assets/css/templatemo-seo-dream.css">
@@ -138,6 +142,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                     </div>
                   </div>
 
+                  <div id="successAlert" class="alert alert-success alert-dismissible fade show" role="alert" style="display: none;">
+                    <span id="alertMessage"></span>
+                    <a href="login.php">Click here for login</a>
+                  </div>
+
                   <div class="col-lg-9">
                     <div class="row">
                       <div class="col-lg-6">
@@ -220,6 +229,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
       </div>
 
     <!-- Scripts -->
+    <script>
+    if (typeof showAlert !== 'undefined' && showAlert) {
+        document.getElementById('alertMessage').innerText = alertMessage;
+        document.getElementById('successAlert').style.display = 'block';
+    }
+    </script>
     <script src="vendor/jquery/jquery.min.js"></script>
     <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
     <script src="assets/js/owl-carousel.js"></script>

@@ -26,14 +26,14 @@ if (isset($_SESSION['user_id'])) {
             $sql_join = "INSERT INTO enrolled_class (id, id_kelas) VALUES ('$user_id', '$id_kelas')";
             if ($conn->query($sql_join) === TRUE) {
                 // Success message
-                echo "<script>var showAlert = true; var alertMessage = 'You have successfully enrolled in the class!';</script>";
+                echo "<script>var showAlert = true; var alertMessage = 'You have successfully join in the class!';</script>";
             } else {
                 // Error message
                 echo "<script>var showAlert = true; var alertMessage = 'Error joining the course. Please try again later.';</script>";
             }
         } else {
             // User is already enrolled in the course
-            echo "<script>var showAlert = true; var alertMessage = 'You are already enrolled in this course.';</script>";
+            echo "<script>var showAlert = true; var alertMessage = 'You are already join in this course.';</script>";
         }
     }
 }
@@ -48,9 +48,9 @@ if (isset($_SESSION['user_id'])) {
 
 <!-- Bootstrap core CSS -->
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 
 <!-- Additional CSS Files -->
 <link rel="stylesheet" href="assets/css/fontawesome.css">
